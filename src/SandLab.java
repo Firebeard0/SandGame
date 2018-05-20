@@ -9,6 +9,8 @@ public class SandLab
   public static final int METAL = 1;
   public static final int SAND = 2;
   public static final int WATER = 3;
+  public static final int ACID = 4;
+
 
   public Color[] displayColor; 
   
@@ -27,18 +29,21 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[4];
+    names = new String[5];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
     names[SAND] = "Sand";
     names[WATER] = "Water";
+    names[ACID] = "Acid";
  
-    displayColor = new Color[4];
+    displayColor = new Color[5];
     displayColor[0] = Color.BLACK;
     displayColor[1] = Color.GRAY;
     displayColor[2] = Color.YELLOW;
     displayColor[3] = Color.BLUE;
+    displayColor[4] = Color.GREEN;
+    
   
     //1. Add code to initialize the data member grid with same dimensions
     
@@ -99,6 +104,12 @@ public class SandLab
 	  if(grid[someRandomRow][someRandomCol] == SAND)
 	  {
 		  moveCell(someRandomRow, someRandomCol, SAND, someRandomRow+1, someRandomCol);
+
+	  }
+	  if(grid[someRandomRow][someRandomCol] == ACID)
+	  {
+		  moveCell(someRandomRow, someRandomCol, ACID, someRandomRow+1, someRandomCol);
+
 	  }
 	  else if(grid[someRandomRow][someRandomCol] == WATER)
 	  {
@@ -116,7 +127,8 @@ public class SandLab
 		  moveCell(someRandomRow, someRandomCol, WATER, destRow, destCol);
 	  }
 			
-    
+	  
+ 
   }
   
   private void moveCell(int row, int col, int type, int destRow, int destCol)
@@ -128,9 +140,31 @@ public class SandLab
 			  grid[destRow][destCol] = type;  //draw the new cell
 			  grid[row][col] = EMPTY;   // empty the old cell
 		  }
+		  if(grid[row][col] == SAND && grid[row + 1][col] == WATER)
+		  {
+			  grid[row][col] = WATER;
+			  grid[row+1][col]= SAND;
+		  }
+		  if(grid[row][col] == ACID)
+		  {
+			  if (grid[row + 1][col] == WATER) {
+				  grid[row][col]= EMPTY;
+			  }
+			  else
+			  {
+			  grid[row][col] = EMPTY;
+			  grid[row +1][col]= ACID;
+			  }
+		  }
+		  
 	  }
+	  else
+		  if (grid[row][col] == ACID)
+			  grid[row][col] = EMPTY;
   
   }
+  
+
   
   //do not modify this method!
   public void run()
