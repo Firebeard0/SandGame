@@ -96,21 +96,40 @@ public class SandLab
     //remember that you need to watch for the edges of the array
 	  
 	  
-	  
-	  
 	  if(grid[someRandomRow][someRandomCol] == SAND)
 	  {
-		  if(someRandomRow != grid.length - 1)
-		  {
-			  if(grid[someRandomRow+1][someRandomCol] == EMPTY)
-			  {
-				  
-				  grid[someRandomRow+1][someRandomCol] = SAND;
-				  grid[someRandomRow][someRandomCol] = EMPTY;
-			  }
+		  moveCell(someRandomRow, someRandomCol, SAND, someRandomRow+1, someRandomCol);
+	  }
+	  else if(grid[someRandomRow][someRandomCol] == WATER)
+	  {
+		  int waterDest = (int) (Math.random() * 3);
+		  int destCol = someRandomCol;
+		  int destRow = someRandomRow;
+		  
+		  if (waterDest == 0)
+			  destCol = someRandomCol - 1; 
+		  else if (waterDest == 2)
+		  	destCol = someRandomCol + 1;
+		  else
+			  destRow = someRandomRow + 1;
+		  			  
+		  moveCell(someRandomRow, someRandomCol, WATER, destRow, destCol);
+	  }
+			
+    
+  }
+  
+  private void moveCell(int row, int col, int type, int destRow, int destCol)
+  {
+	  if(destRow < grid.length && destCol < grid[destRow].length && destCol >= 0)  //is the destination on the grid?
+	  {
+		  if(grid[destRow][destCol] == EMPTY)  //is the destination empty?
+		  {			  
+			  grid[destRow][destCol] = type;  //draw the new cell
+			  grid[row][col] = EMPTY;   // empty the old cell
 		  }
 	  }
-    
+  
   }
   
   //do not modify this method!
