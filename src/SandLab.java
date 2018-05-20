@@ -7,6 +7,10 @@ public class SandLab
   //add constants for particle types here
   public static final int EMPTY = 0;
   public static final int METAL = 1;
+  public static final int SAND = 2;
+  public static final int WATER = 3;
+
+  public Color[] displayColor; 
   
   //do not add any more fields below
   private int[][] grid;
@@ -23,11 +27,19 @@ public class SandLab
     String[] names;
     // Change this value to add more buttons
     //Step 4,6
-    names = new String[2];
+    names = new String[4];
     // Each value needs a name for the button
     names[EMPTY] = "Empty";
     names[METAL] = "Metal";
-    
+    names[SAND] = "Sand";
+    names[WATER] = "Water";
+ 
+    displayColor = new Color[4];
+    displayColor[0] = Color.BLACK;
+    displayColor[1] = Color.GRAY;
+    displayColor[2] = Color.YELLOW;
+    displayColor[3] = Color.BLUE;
+  
     //1. Add code to initialize the data member grid with same dimensions
     
     
@@ -51,17 +63,22 @@ public class SandLab
       //Step 3
    //Hint - use a nested for loop
 	  
+
+	  
 	  for(int row = 0; row < grid.length; row++) {
 		  for(int col = 0; col < grid[row].length; col++)
 		  {
-			  if(grid[row][col] == METAL)
-			  {
-				  display.setColor(row, col, Color.GRAY);
-			  }
-			  else
-			  {
-				  display.setColor(row, col, Color.BLACK);
-			  }
+			  display.setColor(row, col, displayColor[grid[row][col]]);
+			  
+//			  if(grid[row][col] == METAL)
+//			  {
+//				  display.setColor(row, col, Color.GRAY);
+//			  }
+//			  
+//			  else
+//			  {
+//				  display.setColor(row, col, Color.BLACK);
+//			  }
 		  }
 	  }
     
@@ -74,9 +91,25 @@ public class SandLab
   {
     //Remember, you need to access both row and column to specify a spot in the array
     //The scalar refers to how big the value could be
-    //int someRandom = (int) (Math.random() * scalar)
+    int someRandomRow = (int) (Math.random() * grid.length);
+    int someRandomCol = (int) (Math.random() * grid[someRandomRow].length);
     //remember that you need to watch for the edges of the array
-    
+	  
+	  
+	  
+	  
+	  if(grid[someRandomRow][someRandomCol] == SAND)
+	  {
+		  if(someRandomRow != grid.length - 1)
+		  {
+			  if(grid[someRandomRow+1][someRandomCol] == EMPTY)
+			  {
+				  
+				  grid[someRandomRow+1][someRandomCol] = SAND;
+				  grid[someRandomRow][someRandomCol] = EMPTY;
+			  }
+		  }
+	  }
     
   }
   
